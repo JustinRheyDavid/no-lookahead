@@ -10,8 +10,6 @@ root fixes that: pytest adds the directory containing ``conftest.py`` to
 
 from __future__ import annotations
 
-import pytest
-
 
 def pytest_configure(config):
     config.addinivalue_line(
