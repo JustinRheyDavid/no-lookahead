@@ -1,0 +1,49 @@
+# --- Data ---------------------------------------------------------------
+# Cached EDGAR responses. Rebuildable by re-running the pipeline, and large:
+# the full corpus is thousands of filings. Never committed, never deleted
+# casually either — a rebuild costs hours of politely rate-limited fetching.
+data/cache/
+
+# The point-in-time store. Built from the cache, so it is reproducible, and
+# far too large to track.
+data/pit.db
+*.db-journal
+*.db-wal
+
+# Extraction output and generated reports, both rebuildable.
+data/extractions/
+reports/*.md
+!reports/.gitkeep
+
+# The 300 hand labels ARE committed. They are the most expensive artifact in
+# the repository and cannot be regenerated. Same for the experiment registry,
+# which is the honest record of how many strategies were tried — see
+# src/registry.py and plan Step 11.
+!data/gold/labels.jsonl
+!data/registry.jsonl
+
+# Scratch files from the atomic writes in edgar.py. Normally removed on the
+# way out, but a hard kill during a long backfill strands them.
+*.tmp
+
+# --- Python -------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# --- Editors / OS -------------------------------------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Secrets ------------------------------------------------------------
+# EDGAR_USER_AGENT lives here. It is not a secret in the cryptographic sense,
+# but it carries a personal email address and does not belong in a public repo.
+.env
